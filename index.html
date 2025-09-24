@@ -5,12 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MENAKIM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="module">
+<script>
+window.__firebase_config = JSON.stringify({
+  apiKey: "AIzaSyD3kaQ2apkDA-PnyrFxANj0RISbJ47WWcI",
+  authDomain: "menakim-65c55.firebaseapp.com",
+  projectId: "menakim-65c55",
+  storageBucket: "menakim-65c55.firebasestorage.app",
+  messagingSenderId: "87825869270",
+  appId: "1:87825869270:web:ef6f0538cfa456967d1c77",
+  measurementId: "G-6LLRZQ98H6"
+});
+</script>
+
+ <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, onSnapshot, collection, query, addDoc, getDocs, runTransaction, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
+</script>
         // Global variables provided by the canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
