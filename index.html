@@ -7,29 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, collection, query, addDoc, getDocs, runTransaction, updateDoc, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, collection, query, addDoc, getDocs, runTransaction, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables provided by the canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
         // =========================================
         // === TU CONFIGURACIÓN DE FIREBASE ===
-        // Copia y pega aquí el objeto firebaseConfig de tu consola de Firebase.
-        // Ejemplo: const firebaseConfig = { apiKey: "...", ... };
-        const firebaseConfig = {
-          apiKey: "AIzaSyD3kaQ2apkDA-PnyrFxANj0RISbJ47WWcI",
-          authDomain: "menakim-65c55.firebaseapp.com",
-          projectId: "menakim-65c55",
-          storageBucket: "menakim-65c55.firebasestorage.app",
-          messagingSenderId: "87825869270",
-          appId: "1:87825869270:web:ef6f0538cfa456967d1c77",
-          measurementId: "G-6LLRZQ98H6"
-        };
+        // Usamos la configuración del entorno para evitar errores de autenticación.
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         // =========================================
-        
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // Firestore paths for data storage
         const publicCollectionPath = `/artifacts/${appId}/public/data/links`;
@@ -68,14 +58,10 @@
                 auth = getAuth(app);
                 db = getFirestore(app);
                 
-                // Use the custom token provided by the environment.
-                // This is the correct authentication method for this setup.
-                // The anonymous sign-in fallback has been removed as it was causing the error.
                 if (initialAuthToken) {
                     await signInWithCustomToken(auth, initialAuthToken);
                     loginMessage.textContent = "¡Conectado exitosamente!";
                 } else {
-                    // This case should not happen in this environment.
                     console.error("Initial authentication token is missing.");
                     loginMessage.textContent = "Error: Token de autenticación no disponible.";
                     return;
